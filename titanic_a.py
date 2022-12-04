@@ -95,7 +95,24 @@ test["Embarked"][test["Embarked"] == "C"] = 1
 test["Embarked"][test["Embarked"] == "Q"] = 2
 display(test.head(10))
 
-test.Fare[152] = test.Fare.median()
+test.Fare[152] = test.Fare.median()  # なんで152行目って分かった？
 display(kesson_table(test))
 
 # %%
+# 予測モデル その1
+from sklearn import tree
+
+# %%
+# 「train」の目的変数と説明変数の値を取得
+target = train["Survived"].values
+features_one = train[["Pclass", "Sex", "Age", "Fare"]].values
+
+# 学習して決定木の作成
+my_tree_one = tree.DecisionTreeClassifire()
+my_tree_one = my_tree_one.fit(features_one, target)
+
+# 「test」の説明変数の値を取得
+test_feature = test[["Pclass", "Sex", "Age", "Fare"]].values
+
+# 「test」の説明変数を使って「my_tree_one」のモデルで予測
+my_prediction = my_tree_one.predict(test_feature)
