@@ -39,6 +39,7 @@ S = Southampton
 # %%
 display(test.shape)
 display(train.shape)
+
 # %%
 display(test.describe())
 display(train.describe())
@@ -119,6 +120,16 @@ test_feature = test[["Pclass", "Sex", "Age", "Fare"]].values
 my_prediction = my_tree_one.predict(test_feature)
 
 # 結果
+display(my_prediction.shape)
 display(my_prediction)
+
+# %%
+PassengerId = np.array(test["PassengerId"]).astype(int)
+
+# my_prediction(予測データ）とPassengerIdをデータフレームへ落とし込む
+my_solution = pd.DataFrame(my_prediction, PassengerId, columns=["Survived"])
+
+# my_tree_one.csvとして書き出し
+my_solution.to_csv("my_tree_one.csv", index_label=["PassengerId"])
 
 # %%
